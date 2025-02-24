@@ -1,3 +1,7 @@
+# Bootiful AI 
+
+with Dr. Mark Pollack and Josh Long
+
 - start.spring.io 
 - java 23 + graalvm 
 - mcp starters 
