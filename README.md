@@ -1,2 +1,15 @@
-# devnexus-2025-bootiful-ai
-hi Spring fans! in this installment the legendary Dr. Pollack and I, his humble sidekick, Josh, introduce the awesome opportunity of AI engineering with Spring AI
+- start.spring.io 
+- java 23 + graalvm 
+- mcp starters 
+- dog adoption db 
+- repository, entity, controller
+- assistant answering questions: do u have any neurotic dogs?
+- system prompt
+- RAG (`QuestionAnswerAdvisor`)
+- MCP
+- refactor functionality to a MCP service to answer questions about dogs 
+- new client that in turn talks to the MCP service we just built 
+- but what about spam? 
+- refactor the MCP service to have a router workflow (agentic patterns)
+- (maybe do Spring Integration?)
+- production worthiness 
