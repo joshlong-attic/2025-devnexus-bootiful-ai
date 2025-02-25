@@ -1,6 +1,8 @@
 # Bootiful AI 
 
-with Dr. Mark Pollack and Josh Long
+presented first at [Devnexus 2025](https://devnexus.com)
+
+with [Dr. Mark Pollack](https://spring.io/authors/markpollack) and [Josh Long](https://spring.io/authors/joshlong)
 
 - start.spring.io 
 - java 23 + graalvm 
