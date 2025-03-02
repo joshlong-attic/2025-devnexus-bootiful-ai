@@ -2,10 +2,10 @@
 
 ## script
 - introductions
-- what's Spring AI?
-- show the Github star trajectory 
+- DP what's Spring AI?
+- DP show the Github star trajectory 
 - setup the `dog` DB behind the scenes using `init_db.sh` script.
-- my terrible dog, Peanut
+- JL's terrible dog, Peanut
 - meet Prancer
 - start.spring.io (`adoptions`):  `OpenAI`, `PG VectorStore`, `Web`, `Actuator`, `MCP Client`, `Data JDBC`, (`Actuator`)
 
