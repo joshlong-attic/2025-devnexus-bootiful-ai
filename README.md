@@ -3,7 +3,7 @@
 ## script
 - introductions
 - DP what's Spring AI?
-- DP show the Github star trajectory 
+- DP show the Github star trajectory
 - setup the `dog` DB behind the scenes using `init_db.sh` script.
 - JL's terrible dog, Peanut
 - meet Prancer
@@ -129,6 +129,7 @@ http --form POST http://localhost:8080/1/inquire question="fantastic. can you pl
 ```
 
 - now try everything, end to end! 
-- this is nice, but what if there is more complex routing requirments? agentic patterns enter the chat.
+- this is nice, but what if there is more complex routing requirements? agentic patterns enter the chat.
 - DP talks about agentic patterns
+- DP announce community stuff
 - DP and JL take a curtsy and then dismount the stage
