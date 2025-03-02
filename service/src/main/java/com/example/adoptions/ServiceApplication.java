@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.adoptions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 @SpringBootApplication
 public class ServiceApplication {

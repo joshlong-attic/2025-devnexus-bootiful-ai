@@ -1,5 +1,6 @@
-package com.example.service;
+package com.example.adoptions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
@@ -9,6 +10,8 @@ import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,9 +36,10 @@ import java.util.concurrent.ConcurrentHashMap;
 // todo eventually well use MCp to move the appointment functionality out to another MCP service
 
 @SpringBootApplication
-public class ServiceApplication {
+public class AdoptionsApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(ServiceApplication.class, args);
+        SpringApplication.run(AdoptionsApplication.class, args);
     }
 }
 
@@ -53,7 +59,7 @@ class ConversationalConfiguration {
 
     @Bean
     ChatClient chatClient(
-//            DogAdoptionAppointmentScheduler scheduler,
+            DogAdoptionAppointmentScheduler scheduler,
             DogRepository repository,
             VectorStore vectorStore,
             McpSyncClient mcpSyncClient,
@@ -75,8 +81,8 @@ class ConversationalConfiguration {
                 """;
         return builder
                 .defaultSystem(system)
-                .defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClient))
-//                .defaultTools(scheduler)
+//                .defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClient))
+                .defaultTools(scheduler)
                 .build();
     }
 
@@ -88,26 +94,28 @@ interface DogRepository extends ListCrudRepository<Dog, Integer> {
 record Dog(@Id int id, String name, String owner, String description) {
 }
 
-/*record DogAdoptionAppointment(int id, String name, Instant date) {
-}*/
 
-/*
 @Component
 class DogAdoptionAppointmentScheduler {
 
+    private final ObjectMapper om;
+
+    DogAdoptionAppointmentScheduler(ObjectMapper om) {
+        this.om = om;
+    }
+
     @Tool(description = "schedule an appointment to adopt a dog" +
             " at the Pooch Palace dog adoption agency")
-    DogAdoptionAppointment scheduleDogAdoptionAppointment(
+    String scheduleDogAdoptionAppointment(
             @ToolParam(description = "the id of the dog") int id,
-            @ToolParam(description = "the name of the dog") String name) {
-        var appointment = new DogAdoptionAppointment(id, name, Instant.now());
-        System.out.println("confirming the appointment: " + appointment);
-        return appointment;
+            @ToolParam(description = "the name of the dog") String name)
+            throws Exception {
+        var instant = Instant.now().plus(3, ChronoUnit.DAYS);
+        System.out.println("confirming the appointment: " + instant);
+        return om.writeValueAsString(instant);
     }
 }
 
-
- */
 
 @Controller
 @ResponseBody
