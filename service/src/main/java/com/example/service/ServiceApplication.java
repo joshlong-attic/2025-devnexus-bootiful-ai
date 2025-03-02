@@ -1,21 +1,21 @@
 package com.example.service;
 
+import io.modelcontextprotocol.client.McpClient;
+import io.modelcontextprotocol.client.McpSyncClient;
+import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,8 +41,24 @@ public class ServiceApplication {
 @Configuration
 class ConversationalConfiguration {
 
+    // add this <em>after</em> showing the
     @Bean
-    ChatClient chatClient(DogAdoptionAppointmentScheduler scheduler, DogRepository repository, VectorStore vectorStore, ChatClient.Builder builder) {
+    McpSyncClient mcpClient() {
+        var mcpClient = McpClient
+                .sync(new HttpClientSseClientTransport("http://localhost:8081"))
+                .build();
+        mcpClient.initialize();
+        return mcpClient;
+    }
+
+    @Bean
+    ChatClient chatClient(
+//            DogAdoptionAppointmentScheduler scheduler,
+            DogRepository repository,
+            VectorStore vectorStore,
+            McpSyncClient mcpSyncClient,
+            ChatClient.Builder builder) {
+
 
         if (false)
             repository.findAll().forEach(dog -> {
@@ -59,7 +75,8 @@ class ConversationalConfiguration {
                 """;
         return builder
                 .defaultSystem(system)
-                .defaultTools(scheduler)
+                .defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClient))
+//                .defaultTools(scheduler)
                 .build();
     }
 
@@ -71,14 +88,15 @@ interface DogRepository extends ListCrudRepository<Dog, Integer> {
 record Dog(@Id int id, String name, String owner, String description) {
 }
 
-record DogAdoptionAppointment(int id, String name, Instant date) {
-}
+/*record DogAdoptionAppointment(int id, String name, Instant date) {
+}*/
 
+/*
 @Component
 class DogAdoptionAppointmentScheduler {
 
-    @Tool(description = "schedule an appointment to adopt a dog " +
-            "at the Pooch Palace dog adoption agency")
+    @Tool(description = "schedule an appointment to adopt a dog" +
+            " at the Pooch Palace dog adoption agency")
     DogAdoptionAppointment scheduleDogAdoptionAppointment(
             @ToolParam(description = "the id of the dog") int id,
             @ToolParam(description = "the name of the dog") String name) {
@@ -87,6 +105,9 @@ class DogAdoptionAppointmentScheduler {
         return appointment;
     }
 }
+
+
+ */
 
 @Controller
 @ResponseBody
@@ -106,7 +127,7 @@ class ConversationalController {
     String inquire(@PathVariable Long id, @RequestParam String question) {
         var promptChatMemoryAdvisor = this.chatMemory
                 .computeIfAbsent(id, key -> PromptChatMemoryAdvisor.builder(new InMemoryChatMemory()).build());
-        return chatClient
+        return this.chatClient
                 .prompt()
                 .user(question)
                 .advisors(this.questionAnswerAdvisor, promptChatMemoryAdvisor)
