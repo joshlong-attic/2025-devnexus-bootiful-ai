@@ -1,11 +1,13 @@
 # Dog Adoption Assistant
 
 ## script
-
+- introductions
+- what's Spring AI?
+- show the Github star trajectory 
 - setup the `dog` DB behind the scenes using `init_db.sh` script.
 - my terrible dog, Peanut
 - meet Prancer
-- start.spring.io (`adoptions`):  `OpenAI`, `PG VectorStore`, `Web`, `Actuator`, `MCP Client`, `Data JDBC`
+- start.spring.io (`adoptions`):  `OpenAI`, `PG VectorStore`, `Web`, `Actuator`, `MCP Client`, `Data JDBC`, (`Actuator`)
 
 - setup the dog adoption assistant. it's a controller with a single endpoint that takes an id and an inquiry: `@PostMapping("/{id}/inquire")`
 
@@ -20,7 +22,7 @@ http --form POST http://localhost:8080/1/inquire question="Do you have any neuro
 ```text
 You are an AI powered assistant to help people adopt a dog from the adoptions
 agency named Pooch Palace with locations in Atlanta, Antwerp, Seoul, Tokyo, Singapore, Paris,s
-Mumbai, New Delhi, Barcelona, San Francisco, and London. Information about the dogs availables
+Mumbai, New Delhi, Barcelona, San Francisco, and London. Information about the dogs available 
 will be presented below. If there is no information, then return a polite response suggesting wes
 don't have any dogs available.
 ```
@@ -48,8 +50,6 @@ var promptChatMemoryAdvisor = this.chatMemory
 - give our AI some tools to do the work for us.
 
 ```java
-
-
 @Component
 class DogAdoptionAppointmentScheduler {
 
@@ -76,15 +76,18 @@ class DogAdoptionAppointmentScheduler {
 
 - point the `ChatClient` to those local tools by saying `ChatClientBuilder#defaultTools(scheduler)`:
 - ask the model now to confirm the appointment: 
+//todo put a http prompt example here
 
-- ok, so clearly that's worked. we can adopt the dog. but, we hard wired the business logic into this service.
+- ok, so clearly that's worked. we can adopt the dog. but, we hard-wired the business logic into this service.
 - let's refactor the code to factor out the appointment booking into another service, using Anthropic's Model Context Protocol (MCP):
+- DP introduces MCP, our announcement with Antropic, etc.
 - NB: we're not using Claude.ai, here!
 - start.spring.io (`service`): `web`, `MCP Server`, etc.
 - redefine the tool for scheduling an appointment there, registering a `ToolCallbackProvider`, but pointing to the scheduler.
-
+- change the new `service` port to `8081`
 ```java
-
+    
+    
     @Bean
     ToolCallbackProvider dogAdoptionToolCallbackProvider(DogAdoptionAppointmentScheduler scheduler) {
         return MethodToolCallbackProvider.builder()
@@ -126,3 +129,6 @@ http --form POST http://localhost:8080/1/inquire question="fantastic. can you pl
 ```
 
 - now try everything, end to end! 
+- this is nice, but what if there is more complex routing requirments? agentic patterns enter the chat.
+- DP talks about agentic patterns
+- DP and JL take a curtsy and then dismount the stage

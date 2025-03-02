@@ -59,7 +59,7 @@ class ConversationalConfiguration {
 
     @Bean
     ChatClient chatClient(
-            DogAdoptionAppointmentScheduler scheduler,
+//            DogAdoptionAppointmentScheduler schedulerTool,
             DogRepository repository,
             VectorStore vectorStore,
             McpSyncClient mcpSyncClient,
@@ -81,8 +81,8 @@ class ConversationalConfiguration {
                 """;
         return builder
                 .defaultSystem(system)
-//                .defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClient))
-                .defaultTools(scheduler)
+                .defaultTools(new SyncMcpToolCallbackProvider(mcpSyncClient))
+//                .defaultTools(schedulerTool)
                 .build();
     }
 
@@ -125,6 +125,7 @@ class ConversationalController {
     private final QuestionAnswerAdvisor questionAnswerAdvisor;
     private final Map<Long, PromptChatMemoryAdvisor> chatMemory = new ConcurrentHashMap<>();
 
+    // todo move questionAnswerAdvisor back to ChatClient
     ConversationalController(VectorStore vectorStore, ChatClient chatClient) {
         this.chatClient = chatClient;
         this.questionAnswerAdvisor = new QuestionAnswerAdvisor(vectorStore);

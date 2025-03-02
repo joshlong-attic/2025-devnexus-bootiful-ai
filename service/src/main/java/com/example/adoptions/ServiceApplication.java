@@ -47,7 +47,8 @@ class DogAdoptionAppointmentScheduler {
             @ToolParam(description = "the name of the dog") String name)
             throws Exception {
         var instant = Instant.now().plus(3, ChronoUnit.DAYS);
-        System.out.println("confirming the appointment: " + instant);
+        System.out.println("confirming the appointment: " +
+                instant + " for dog " + id + " named " + name);
         return om.writeValueAsString(instant);
     }
 }
