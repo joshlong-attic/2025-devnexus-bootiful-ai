@@ -1,5 +1,11 @@
 # Dog Adoption Assistant
 
+## jokes 
+
+- youre such a tool! 
+- thats not a good demo tho cuz its always 
+- picture of christian with glorious long hair and now bald: hairline receede half a meter!!!
+
 ## script
 - introductions
 - DP
