@@ -2,8 +2,16 @@
 
 ## script
 - introductions
-- DP what's Spring AI?
-- DP show the Github star trajectory
+- DP
+  - Intro to the Generative AI topic
+  - Role of AI Engineer
+  - What's Spring AI?
+  - Challenages writing AI applications
+  - Quick tour of an AI application using RAG
+- Removed  (DP show the Github star trajectory)
+
+
+
 - setup the `dog` DB behind the scenes using `init_db.sh` script.
 - JL's terrible dog, Peanut
 - meet Prancer
