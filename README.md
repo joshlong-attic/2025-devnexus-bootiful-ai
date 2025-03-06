@@ -9,6 +9,10 @@
 - DP says "SDKs" (he'll show anthropic website)
 - DP talks about workflow patterns: "wait, doc, are you saying we could use (Spring Integration, Spring Batch, Spring Cloud Data Flow, Spring Cloud Stream, Camel, Flowable, a freaking ForkJoinPool) + Spring AI?" (he says yes to each of them)
 
+## tool descriptions
+- `schedule an appointment to visit or adopt a dog`
+
+
 
 ## jokes 
 
