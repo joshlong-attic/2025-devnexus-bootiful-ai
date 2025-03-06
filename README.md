@@ -32,12 +32,13 @@ question = "great. when can i visit to adopt Prancer?"
 
 - intro 
 - prancer
-- start.spring.io  (jdbc, web, ai, pgvector, mcp client)
+- start.spring.io  (jdbc, web, ai, actuator, pgvector, mcp client)
 - application.properties (SQL DB, openai api key)
 - `/{id}/inquire` controller 
 - `ChatClient` 
 - user prompt
 - 'im josh', 'whats my name?'
+- observability and actuator
 - no memory? advisors 
 - it works. can it help us with finding the dog of our nightmares?
 - nope! 
@@ -45,7 +46,9 @@ question = "great. when can i visit to adopt Prancer?"
 - system prompt 
 - better, but no data! 
 - RAG
-- tools 
+- tools
+- MCP
+- agentic 
 
 
 ## important snippets:
