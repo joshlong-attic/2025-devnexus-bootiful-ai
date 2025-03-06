@@ -6,7 +6,7 @@
 - open up `scratch.http`
 
 ## josh prompts: 
-- DP says "SDKs" (he'll show anthropic website)
+- DP says "SDKs" (he'll show anthropic website in the MCP), christian and golden hair
 - DP talks about workflow patterns: "wait, doc, are you saying we could use (Spring Integration, Spring Batch, Spring Cloud Data Flow, Spring Cloud Stream, Camel, Flowable, a freaking ForkJoinPool) + Spring AI?" (he says yes to each of them)
 
 ## tool descriptions
